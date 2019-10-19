@@ -7,12 +7,12 @@ import get_image_size
 
 try:
     with open('config.yaml', 'r') as yml_file:
-        cfg = yaml.load(yml_file)
+        cfg = yaml.load(yml_file, Loader=yaml.SafeLoader)['path']
 except (FileNotFoundError, IOError) as e:
     raise e
 
-picture_path = cfg['path']['image']
-video_path = cfg['path']['video']
+picture_path = cfg['image']
+video_path = cfg['video']
 
 video = []
 picture = []
@@ -51,7 +51,3 @@ def get_video(name):
         return send_file(video_path + name)
     except FileNotFoundError:
         abort(404)
-
-
-if __name__ == '__main__':
-    app.run(host=cfg['host'])
