@@ -23,7 +23,6 @@
     <title>Content</title>
 </head>
 
-
 <body>
 
 <button class="tablink" onclick="openPage('Picture', this)" id="defaultOpen">Picture</button>
@@ -45,11 +44,13 @@
 
 
 <div id="Picture" class="tabcontent">
-{#    <button id="btn">Open PhotoSwipe</button>#}
-
-    {% for picture in file_list.picture %}
-        <img onclick="openPhotoSwipe(this);" id="test" src="http://192.168.1.4:5000/get_image/{{ picture.name }}" width="{{ picture.width / 4 }}" height="picture.height / 4">
-    {% endfor %}
+    <div class="gallery">
+        {% for picture in file_list.picture %}
+            <div class="item_container">
+                <img class="item" onclick="openPhotoSwipe(this);" id="test" src="http://192.168.1.4:5000/get_image/{{ picture.name }}" />
+            </div>
+        {% endfor %}
+    </div>
 
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
