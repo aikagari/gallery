@@ -47,7 +47,7 @@
     <div class="gallery">
         {% for picture in file_list.picture %}
             <div class="item_container">
-                <img class="item" onclick="openPhotoSwipe(this);" id="test" src="http://192.168.1.4:5000/get_image/{{ picture.name }}" />
+                <img class="item" onclick="openPhotoSwipe(this);" data-index-number="{{ loop.index }}" src="{{ picture.name }}" />
             </div>
         {% endfor %}
     </div>
@@ -103,47 +103,38 @@
                 <div class="pswp__caption">
                     <div class="pswp__caption__center"></div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     <script>
         var openPhotoSwipe = function (elem) {
-            console.log(elem.id);
             var pswpElement = document.querySelectorAll('.pswp')[0];
 
             // build items array
             var items = [
                 {% for picture in file_list.picture %}
                     {
-                        src: 'http://192.168.1.4:5000/get_image/{{ picture.name }}',
+                        src: '{{ picture.name }}',
                         w: {{ picture.width }},
                         h: {{ picture.height }}
                     },
                 {% endfor %}
             ];
 
-            // define options (if needed)
             var options = {
-                // history & focus options are disabled on CodePen
+                index: elem.dataset.indexNumber - 1,
                 history: false,
-                focus: false,
+                focus: true,
 
-                showAnimationDuration: 0,
-                hideAnimationDuration: 0
+                showAnimationDuration: 1,
+                hideAnimationDuration: 1
 
             };
 
             var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
             gallery.init();
         };
-
-        {#openPhotoSwipe();#}
-
-        {#document.getElementsByClassName('img_src').onclick = openPhotoSwipe;#}
     </script>
 </div>
 </body>

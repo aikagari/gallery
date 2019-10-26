@@ -7,12 +7,13 @@ import get_image_size
 
 try:
     with open('config.yaml', 'r') as yml_file:
-        cfg = yaml.load(yml_file, Loader=yaml.SafeLoader)['path']
+        cfg = yaml.load(yml_file, Loader=yaml.SafeLoader)
 except (FileNotFoundError, IOError) as e:
     raise e
 
-picture_path = cfg['image']
-video_path = cfg['video']
+picture_path = cfg['path']['image']
+video_path = cfg['path']['video']
+url_static = '//{}/get_{}/{}'
 
 video = []
 picture = []
@@ -23,8 +24,11 @@ app = Flask(__name__)
 for f in sorted(listdir(picture_path)):
     if isfile(join(picture_path, f)) and f.split('.')[-1].lower() in images_ext:
         img = get_image_size.get_image_metadata(join(picture_path, f))
-        picture.append(
-            {'name': f, 'width': img.width, 'height': img.height})
+        picture.append({
+                'name': url_static.format(cfg['host'], 'image', f),
+                'width': img.width,
+                'height': img.height
+            })
 
 
 for f in sorted(listdir(video_path)):
