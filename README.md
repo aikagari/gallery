@@ -18,5 +18,6 @@ cat config.yaml.tmpl > config.yaml
 ```
 Run
 ```
-python main.py
+python wsgi.py
 ```
+Or use uwsgi/gunicorn
