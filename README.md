@@ -5,7 +5,6 @@ Simple local gallery
 Install npm modules
 ```
 cd static
-npm init
 npm install
 ```
 Install dependencies

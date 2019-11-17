@@ -37,7 +37,8 @@ if os.path.isdir(video_path):
     for f in sorted(listdir(video_path)):
         if isfile(join(video_path, f)) and f.split('.')[-1].lower() in video_ext:
             video.append({
-                'name': url_static.format(cfg['host'], 'video', f),
+                'name': f,
+                'path': url_static.format(cfg['host'], 'video', f),
                 'ext': f.split('.')[-1].lower()
             })
 

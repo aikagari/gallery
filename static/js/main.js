@@ -33,3 +33,30 @@ document.addEventListener("DOMContentLoaded", function() {
       imageObserver.observe(v);
   })
 });
+
+//video
+//window.document.onkeydown = function(e) {
+//  if (!e) {
+//    e = event;
+//  }
+//  if (e.keyCode == 27) {
+//
+//    lightbox_close();
+//  }
+//}
+
+function lightbox_open(video_id) {
+  var lightBoxVideo = document.getElementById(video_id);
+  window.scrollTo(0, 0);
+  video = document.getElementById('light'+video_id);
+  document.getElementById('light'+video_id).style.display = 'block';
+  document.getElementById('fade'+video_id).style.display = 'block';
+  lightBoxVideo.play();
+}
+
+function lightbox_close(video_id) {
+  var lightBoxVideo = document.getElementById(video_id);
+  document.getElementById('light'+video_id).style.display = 'none';
+  document.getElementById('fade'+video_id).style.display = 'none';
+  lightBoxVideo.pause();
+}

@@ -17,13 +17,17 @@
 
 <div id="Video" class="tabContent">
     {% for video in response.video %}
-        <video
-            poster="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-            playsinline
-            controls
-            preload="none">
-            <source src='{{ video.name }}' type="video/{{ video.ext }}" />
+    <img
+         onclick="lightbox_open('{{ video.name}}');" class="img_container"
+         src="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+    <div id="fade{{video.name}}" onClick="lightbox_close(this.id);"></div>
+    <div id="light{{ video.name}}" class="video">
+      <a class="boxclose {{ video.name}}" id="boxclose" onclick="lightbox_close('{{video.name}}');"></a>
+      <video id="{{ video.name}}" width="600" controls>
+          <source src='{{ video.path }}' type="video/{{ video.ext }}" />
         </video>
+    </div>
+
     {% endfor %}
 </div>
 <div id="Picture" class="tabContent">
