@@ -20,9 +20,9 @@
     <img
          onclick="lightbox_open('{{ video.name}}');" class="img_container"
          src="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
-    <div id="fade{{video.name}}" onClick="lightbox_close(this.id);"></div>
-    <div id="light{{ video.name}}" class="video">
-      <a class="boxclose {{ video.name}}" id="boxclose" onclick="lightbox_close('{{video.name}}');"></a>
+    <div id="fade{{video.name}}" class="fade" onClick="lightbox_close('{{video.name}}');"></div>
+    <div id="light{{ video.name}}" data-name="{{ video.name}}" class="video light">
+      <a class="boxclose {{ video.name}}" onclick="lightbox_close('{{video.name}}');"></a>
       <video id="{{ video.name}}" width="600" controls>
           <source src='{{ video.path }}' type="video/{{ video.ext }}" />
         </video>

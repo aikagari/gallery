@@ -35,15 +35,18 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 //video
-//window.document.onkeydown = function(e) {
-//  if (!e) {
-//    e = event;
-//  }
-//  if (e.keyCode == 27) {
-//
-//    lightbox_close();
-//  }
-//}
+window.onkeydown = function( event ) {
+    if ( event.keyCode == 27 ) {
+        list_item = document.querySelectorAll('[id^=light]');
+        for (var i=0; i < list_item.length; i++) {
+            if (list_item[i].style.display == 'block') {
+                lightbox_close(list_item[i].dataset.name);
+                break;
+            }
+        }
+    }
+};
+
 
 function lightbox_open(video_id) {
   var lightBoxVideo = document.getElementById(video_id);
