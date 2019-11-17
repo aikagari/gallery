@@ -1,53 +1,41 @@
 <html lang="ru">
 <head>
-    <link href="https://vjs.zencdn.net/7.6.5/video-js.css" rel="stylesheet">
-
-    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <!-- Core CSS file -->
     <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe.css') }}">
-
-    <!-- Skin CSS file (styling of UI - buttons, caption, etc.)
-         In the folder of skin CSS file there are also:
-         - .png and .svg icons sprite,
-         - preloader.gif (for browsers that do not support CSS animations) -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='node_modules/photoswipe/dist/default-skin/default-skin.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/photoswipe/dist/default-skin/default-skin.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <!-- Core JS file -->
+
     <script src="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe.js') }}"></script>
-    <!-- UI JS file -->
     <script src="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe-ui-default.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <title>Content</title>
 </head>
 
 <body>
 
-<button class="tablink" onclick="openPage('Picture', this)" id="defaultOpen">Picture</button>
-<button class="tablink" onclick="openPage('Video', this)">Video</button>
+<button class="tabLink" onclick="openPage('Picture', this)" id="defaultOpen">Picture</button>
+<button class="tabLink" onclick="openPage('Video', this)">Video</button>
 
-<div id="Video" class="tabcontent">
-    {% for video in file_list.video %}
-        <video id='my-video' class='video-js' controls preload='auto' width='640' height='264' data-setup='{}'>
-            <source src='http://192.168.1.4:5000/get_video/{{ video.name }}' type="video/{{ video.ext }}">
-            <p class='vjs-no-js'>
-                To view this video please enable JavaScript, and consider upgrading to a web browser that
-                <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
-            </p>
+<div id="Video" class="tabContent">
+    {% for video in response.video %}
+        <video
+            poster="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            playsinline
+            controls
+            preload="none">
+            <source src='{{ video.name }}' type="video/{{ video.ext }}" />
         </video>
     {% endfor %}
-
-    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
 </div>
-
-
-<div id="Picture" class="tabcontent">
+<div id="Picture" class="tabContent">
     <div class="gallery">
-        {% for picture in file_list.picture %}
+        {% for picture in response.picture %}
             <div class="item_container">
-                <img class="item" onclick="openPhotoSwipe(this);" data-index-number="{{ loop.index }}" src="{{ picture.name }}" />
+                <img
+                        class="item lzy_img"
+                        onclick="openPhotoSwipe(this);"
+                        src="{{ url_for('static', filename='images/loading2.gif') }}"
+                        data-index-number="{{ loop.index }}" data-src="{{ picture.name }}"  alt=""
+                />
             </div>
         {% endfor %}
     </div>
@@ -111,9 +99,8 @@
         var openPhotoSwipe = function (elem) {
             var pswpElement = document.querySelectorAll('.pswp')[0];
 
-            // build items array
             var items = [
-                {% for picture in file_list.picture %}
+                {% for picture in response.picture %}
                     {
                         src: '{{ picture.name }}',
                         w: {{ picture.width }},

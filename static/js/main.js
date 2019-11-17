@@ -1,23 +1,35 @@
+// button video/image, need to replace to tabs
 function openPage(pageName, elmnt, color) {
-  // Hide all elements with class="tabcontent" by default */
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+  let i, tabContent, tabLinks;
+  tabContent = document.getElementsByClassName("tabContent");
+  for (i = 0; i < tabContent.length; i++) {
+    tabContent[i].style.display = "none";
   }
 
-  // Remove the background color of all tablinks/buttons
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].style.backgroundColor = "";
+  tabLinks = document.getElementsByClassName("tabLinks");
+  for (i = 0; i < tabLinks.length; i++) {
+    tabLinks[i].style.backgroundColor = "";
   }
 
-  // Show the specific tab content
   document.getElementById(pageName).style.display = "block";
-
-  // Add the specific color to the button used to open the tab content
   elmnt.style.backgroundColor = color;
 }
 
-// Get the element with id="defaultOpen" and click on it
-// document.getElementById("defaultOpen").click();
+// lazy load images
+document.addEventListener("DOMContentLoaded", function() {
+  const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+      entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+              const lazyImage = entry.target;
+              console.log("lazy loading ", lazyImage);
+              lazyImage.src = lazyImage.dataset.src;
+              lazyImage.classList.remove("lzy_img");
+              imgObserver.unobserve(lazyImage);
+          }
+      })
+  });
+  const arr = document.querySelectorAll('img.lzy_img');
+  arr.forEach((v) => {
+      imageObserver.observe(v);
+  })
+});
