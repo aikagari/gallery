@@ -59,4 +59,5 @@ function lightbox_close(video_id) {
   document.getElementById('light'+video_id).style.display = 'none';
   document.getElementById('fade'+video_id).style.display = 'none';
   lightBoxVideo.pause();
+  lightBoxVideo.currentTime = 0;
 }
