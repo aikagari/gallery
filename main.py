@@ -3,9 +3,21 @@ from os import listdir
 from os.path import isfile, join
 import re
 from flask import Flask, render_template, send_file, abort, Response, request
-import yaml
 import get_image_size
+import yaml
 
+from thumbnail import create_thumbnail
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
+auth = HTTPBasicAuth()
+users = {
+    "test_user": generate_password_hash('test')
+}
+@auth.verify_password
+def verify_password(username, password):
+    if username in users:
+        return check_password_hash(users.get(username), password)
+    return False
 
 try:
     with open('config.yaml', 'r') as yml_file:
@@ -15,6 +27,7 @@ except (FileNotFoundError, IOError) as e:
 
 picture_path = cfg['path']['image']
 video_path = cfg['path']['video']
+thumbnail_path = cfg['path']['thumbnail']
 url_static = '//{}/get_{}/{}'
 
 video = []
@@ -35,11 +48,16 @@ if os.path.isdir(picture_path):
 
 if os.path.isdir(video_path):
     for f in sorted(listdir(video_path)):
-        if isfile(join(video_path, f)) and f.split('.')[-1].lower() in video_ext:
+        file_with_path = join(video_path, f)
+        if isfile(file_with_path) and f.split('.')[-1].lower() in video_ext:
+            filename_without_ext = f.split('.')[0]
+            template_thumbnail_file = create_thumbnail(file_with_path, thumbnail_path, filename_without_ext)
+            
             video.append({
                 'name': f,
                 'path': url_static.format(cfg['host'], 'video', f),
-                'ext': f.split('.')[-1].lower()
+                'ext': f.split('.')[-1].lower(),
+                'thumbnail': url_static.format(cfg['host'], 'thumbnail', template_thumbnail_file)
             })
 
 
@@ -50,6 +68,7 @@ def after_request(response):
 
 
 @app.route('/')
+@auth.login_required
 def index():
     response = {'picture': picture, 'video': video}
     agent = request.headers.get('User-Agent')
@@ -64,6 +83,12 @@ def get_image(name):
     except FileNotFoundError:
         abort(404)
 
+@app.route('/get_thumbnail/<name>')
+def get_thumbnail(name):
+    try:
+        return send_file(thumbnail_path + name)
+    except FileNotFoundError:
+       abort(404)
 
 @app.route('/get_video/<name>')
 def get_video(name):

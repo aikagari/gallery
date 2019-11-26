@@ -105,6 +105,7 @@ venv.bak/
 
 .DS_Store
 .idea/
+.vscode/
 static/node_modules/
 config.yaml
 docker-compose.yml

@@ -21,6 +21,8 @@ body, html {
 }
 
 .tabcontent {
+  width: 1200px;
+  margin: auto;
   color: white;
   display: none;
   padding: 100px 20px;
@@ -173,7 +175,13 @@ body, html {
 }
 
 .img_container {
-  float: left;
-  width: 450px;
-  margin: auto;
+  width: 30%;
+  margin: 30px 1%;
+}
+
+.video_link {
+  width: 30%;
+  margin: 30px 1%;
+  color: #555;
+  display: block;
 }
