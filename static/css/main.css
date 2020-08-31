@@ -1,32 +1,68 @@
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial, serif;
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, serif;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #555;
+    color: white;
+}
+
+.header__section {
+    display: flex;
+    align-items: center;
+}
+
+.header__item {
+    padding: 10px 15px;
+    font-size: 17px;
+    margin-left: 5px;
+}
+
+.header__item:hover {
+    background-color: #777;
+    border-radius: 4px;
+}
+
+.headerlogo {
+    font-weight: bold;
 }
 
 .tablink {
-  background-color: #555;
-  color: white;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 50%;
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 50%;
+    box-sizing: border-box;
+    text-align: center;
 }
 
+
 .tablink:hover {
-  background-color: #777;
+    background-color: #777;
 }
 
 .tabcontent {
-  width: 1200px;
-  margin: auto;
-  color: white;
-  display: none;
-  padding: 100px 20px;
-  height: 100%;
+    width: 1200px;
+    margin: auto;
+    color: white;
+    padding: 100px 20px;
+    height: 100%;
 }
 
 /* type 1, compressed to container size */
@@ -55,133 +91,164 @@ body, html {
 
 /* type 2, mosaic type */
 .gallery {
-  display: grid;
-  height: 500vh;
-  grid-template: repeat(6, minmax(200px, 1fr))/repeat(6, minmax(200px, 1fr));
-  grid-gap: 0.5em;
-}
-@media (max-width: 800px) {
-  .gallery {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-  .gallery > div {
-    width: 48%;
-    margin: 1%;
-  }
-}
-@media (max-width: 800px) and (max-width: 350px) {
-  .gallery > div {
-    width: 98%;
-  }
+    clear: left;
+    display: grid;
+    height: 500vh;
+    grid-template: repeat(6, minmax(200px, 1fr))/repeat(6, minmax(200px, 1fr));
+    grid-gap: 0.5em;
 }
 
-.gallery > div:nth-child(6n + 1) {
-  grid-column: span 2;
-  grid-row: span 2;
+@media (max-width: 800px) {
+    .gallery {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .gallery>div {
+        width: 48%;
+        margin: 1%;
+    }
 }
-.gallery > div:nth-child(2) {
-  grid-column: span 3;
-  grid-row: span 3;
+
+@media (max-width: 800px) and (max-width: 350px) {
+    .gallery>div {
+        width: 98%;
+    }
 }
-.gallery > div:nth-child(4) {
-  grid-column: span 1;
-  grid-row: span 2;
+
+.gallery>div:nth-child(6n + 1) {
+    grid-column: span 2;
+    grid-row: span 2;
 }
-.gallery > div > img {
-  width: 100%;
-  min-height: 100%;
-  transition: all ease 1s;
+
+.gallery>div:nth-child(2) {
+    grid-column: span 3;
+    grid-row: span 3;
 }
-.gallery > div {
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
+
+.gallery>div:nth-child(4) {
+    grid-column: span 1;
+    grid-row: span 2;
 }
+
+.gallery>div>img {
+    width: 100%;
+    min-height: 100%;
+    transition: all ease 1s;
+}
+
+.gallery>div {
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .gallery div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
 
 .fade {
-  display: none;
-  position: fixed;
-  top: 0%;
-  left: 0%;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  z-index: 1001;
-  -moz-opacity: 0.8;
-  opacity: .80;
-  filter: alpha(opacity=80);
+    display: none;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 1001;
+    -moz-opacity: 0.8;
+    opacity: .80;
+    filter: alpha(opacity=80);
 }
 
 .light {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  max-width: 600px;
-  max-height: 360px;
-  margin-left: -300px;
-  margin-top: -180px;
-  border: 2px solid #FFF;
-  background: #FFF;
-  z-index: 1002;
-  overflow: visible;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 600px;
+    max-height: 360px;
+    margin-left: -300px;
+    margin-top: -180px;
+    border: 2px solid #FFF;
+    background: #FFF;
+    z-index: 1002;
+    overflow: visible;
 }
 
 .boxclose {
-  float: right;
-  cursor: pointer;
-  color: #fff;
-  border: 1px solid #AEAEAE;
-  border-radius: 3px;
-  background: #222222;
-  font-size: 31px;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 0px;
-  padding: 11px 3px;
-  position: absolute;
-  right: 2px;
-  top: 2px;
-  z-index: 1002;
-  opacity: 0.9;
+    float: right;
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid #AEAEAE;
+    border-radius: 3px;
+    background: #222222;
+    font-size: 31px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 3px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    z-index: 1002;
+    opacity: 0.9;
 }
 
 .boxclose:before {
-  content: "×";
+    content: "×";
 }
 
 .video {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  max-width: 600px;
-  max-height: 360px;
-  margin-left: -300px;
-  margin-top: -180px;
-  border: 2px solid #FFF;
-  background: #FFF;
-  z-index: 1002;
-  overflow: visible;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 600px;
+    max-height: 360px;
+    margin-left: -300px;
+    margin-top: -180px;
+    border: 2px solid #FFF;
+    background: #FFF;
+    z-index: 1002;
+    overflow: visible;
 }
 
 .img_container {
-  width: 30%;
-  margin: 30px 1%;
+    width: 30%;
+    margin: 30px 1%;
 }
 
 .video_link {
-  width: 30%;
-  margin: 30px 1%;
-  color: #555;
-  display: block;
+    width: 30%;
+    margin: 30px 1%;
+    color: #555;
+    display: block;
+}
+
+.folder_name {
+    color: #555;
+}
+
+.item_container {
+    position: relative;
+    display: inline-block;
+}
+
+.item_container span {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: -0.7em;
+    left: 0;
+}
+
+.folder_wrap {
+    float: left;
+    padding-bottom: 1em;
 }

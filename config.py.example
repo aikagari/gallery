@@ -1,0 +1,9 @@
+# -*- conding: utf8 -*-
+
+VIDEO_PATH = '/path/to/video/folder/'
+IMAGE_PATH = '/path/to/picture/folder/'
+THUMBNAIL_PATH = '/path/to/thumbnail/folder/'
+HOST = '192.168.1.1'
+PORT = 8000
+VIDEO_EXT = ['webm', 'mp4']
+IMAGES_EXT = ['jpg', 'jpeg', 'gif', 'png']

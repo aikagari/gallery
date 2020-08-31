@@ -1,46 +1,33 @@
-<html lang="ru">
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/photoswipe/dist/default-skin/default-skin.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% extends 'base.html' %}
 
-    <script src="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe.js') }}"></script>
-    <script src="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe-ui-default.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <title>Content</title>
-</head>
-
-<body>
-
-<button class="tabLink" onclick="openPage('Picture', this)" id="defaultOpen">Picture</button>
-<button class="tabLink" onclick="openPage('Video', this)">Video</button>
-
-<div id="Video" class="tabContent">
-    {% for video in response.video %}
-    <a href="{{video.path}}" class="video_link">{{ video.path }}</a>
-    <img
-        onclick="lightbox_open('{{ video.name}}');" class="img_container"
-        src="{{ video.thumbnail }}">
-    <div id="fade{{video.name}}" class="fade" onClick="lightbox_close('{{video.name}}');"></div>
-    <div id="light{{ video.name}}" data-name="{{ video.name}}" class="video light">
-        <a class="boxclose {{ video.name}}" onclick="lightbox_close('{{video.name}}');"></a>
-        <video id="{{ video.name}}" width="600" controls>
-            <source src='{{ video.path }}' type="video/{{ video.ext }}" />
-        </video>
-    </div>
-    {% endfor %}
-</div>
+{% block content %}
 <div id="Picture" class="tabContent">
-    <div class="gallery">
-        {% for picture in response.picture %}
+    {% if response.pictures.is_back %}
+    <a href="{{picture.name}}">
+        <img class="item lzy_img" src="{{ url_for('static', filename='images/back.png') }}"
+            data-index-number="{{ loop.index }}" data-src="{{ picture.icon }}" alt="" />
+    </a>
+    {% endif %}
+    <div class="folder_wrap">
+    {% for picture in response.pictures.folders %}
+        <a href="{{picture.name}}">
             <div class="item_container">
-                <img
-                        class="item lzy_img"
-                        onclick="openPhotoSwipe(this);"
-                        src="{{ url_for('static', filename='images/loading2.gif') }}"
-                        data-index-number="{{ loop.index }}" data-src="{{ picture.name }}"  alt=""
-                />
+                <img class="item lzy_img" src="{{ url_for('static', filename='images/loading2.gif') }}"
+                    width="{{picture.width}}" height="{{picture.height}}"
+                    data-index-number="{{ loop.index }}" data-src="{{ picture.icon }}" alt="" />
+                <span class="folder_name">{{picture.folder_name}}</span>
             </div>
+        </a>    
+    {% endfor %}
+    </div>
+
+    <div class="gallery">
+        {% for picture in response.pictures.pictures %}
+        <div class="item_container">
+            <img class="item lzy_img" onclick="openPhotoSwipe(this);"
+                src="{{ url_for('static', filename='images/loading2.gif') }}" data-index-number="{{ loop.index }}"
+                data-src="{{ picture.name }}" alt="" />
+        </div>
         {% endfor %}
     </div>
 
@@ -48,7 +35,7 @@
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
         <!-- Background of PhotoSwipe.
-             It's a separate element, as animating opacity is faster than rgba(). -->
+            It's a separate element, as animating opacity is faster than rgba(). -->
         <div class="pswp__bg"></div>
 
         <!-- Slides wrapper with overflow:hidden. -->
@@ -102,14 +89,13 @@
     <script>
         var openPhotoSwipe = function (elem) {
             var pswpElement = document.querySelectorAll('.pswp')[0];
-
             var items = [
-                {% for picture in response.picture %}
-                    {
-                        src: '{{ picture.name }}',
-                        w: {{ picture.width }},
-                        h: {{ picture.height }}
-                    },
+            {% for picture in response.pictures.pictures %} 
+            {
+                src: '{{ picture.name }}',
+                w: {{ picture.width }},
+                h: {{ picture.height }}
+            },
                 {% endfor %}
             ];
 
@@ -128,5 +114,5 @@
         };
     </script>
 </div>
-</body>
-</html>
+
+{% endblock %}

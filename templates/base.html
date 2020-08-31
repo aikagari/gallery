@@ -1,0 +1,43 @@
+<html lang="ru">
+
+<head>
+    {% block head %}
+    <title>Content</title>
+    {% endblock %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe.css') }}">
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='node_modules/photoswipe/dist/default-skin/default-skin.css') }}">
+
+    <script src="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe.js') }}"></script>
+    <script src="{{ url_for('static', filename='node_modules/photoswipe/dist/photoswipe-ui-default.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header__section">
+            <div class="header__item headerlogo">
+                <a href="/">LOGO</a>
+            </div>
+            <div class="header__item headerButton">
+                <a href="/picture">Picture</a>
+            </div>
+            <div class="header__item headerButton">
+                <a href="/video">Video</a>
+            </div>
+        </div>
+        <div class="header__section">
+            <div class="header__item headerlogo">
+                <a href="/settings">Настройки</a>
+            </div>
+            <div class="header__item headerButton">
+                <a href="/logout">Выйти</a>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>

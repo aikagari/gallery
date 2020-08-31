@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="Video" class="tabContent">
+    <div class="folder_wrap">
+        {% for video in response.videos.folders %}
+        <a href="{{video.name}}">
+            <div class="item_container">
+                <img class="item lzy_img" src="{{ url_for('static', filename='images/loading2.gif') }}"
+                    width="{{video.width}}" height="{{video.height}}" data-index-number="{{ loop.index }}"
+                    data-src="{{ video.icon }}" alt="" />
+                <span class="folder_name">{{video.folder_name}}</span>
+            </div>
+        </a>
+        {% endfor %}
+
+        {% for video in response.videos.videos %}
+        <a href="{{video.path}}" class="video_link">{{ video.path }}</a>
+        <img onclick="lightbox_open('{{ video.name}}');" class="img_container" src="{{ video.thumbnail }}">
+        <div id="fade{{video.name}}" class="fade" onClick="lightbox_close('{{video.name}}');"></div>
+        <div id="light{{ video.name}}" data-name="{{ video.name}}" class="video light">
+            <a class="boxclose {{ video.name}}" onclick="lightbox_close('{{video.name}}');"></a>
+            <video id="{{ video.name}}" width="600" controls>
+                <source src='{{ video.path }}' type="video/{{ video.ext }}" />
+            </video>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% endblock %}

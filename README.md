@@ -13,7 +13,7 @@ pip install -r requirements.txt
 ```
 Create and edit your config
 ```
-cat config.yaml.tmpl > config.yaml
+cat config.py.example > config.py
 ```
 Run
 ```

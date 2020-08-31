@@ -107,5 +107,5 @@ venv.bak/
 .idea/
 .vscode/
 static/node_modules/
-config.yaml
+config.py
 docker-compose.yml
